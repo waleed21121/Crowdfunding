@@ -1,5 +1,5 @@
 import { Dialect, Sequelize } from 'sequelize';
-import { envVariables } from '../config';
+import { envVariables, logger } from '../config';
 import { User } from './user';
 import { Campaign } from './campaign';
 import { RewardTier } from './reward_tier';
@@ -35,9 +35,9 @@ require('./associations');
 const DBConnect = async () => {
   try {
     await sequelize.authenticate();
-    console.log('Database connection established successfully.');
+    logger.info('Database connection established successfully.');
   } catch (error) {
-    console.error('Unable to connect to the database:', error);
+    logger.error(`Unable to connect to the database: ${error}`);
     throw error;
   }
 };
