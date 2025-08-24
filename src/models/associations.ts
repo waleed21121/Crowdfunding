@@ -7,7 +7,7 @@ User.hasMany(Campaign, {
 Campaign.belongsTo(User, {
     foreignKey: 'user_id',
     targetKey: 'id',
-    as: 'campaigns',
+    as: 'campaign_user',
     onDelete: 'cascade'
 })
 
@@ -18,7 +18,7 @@ User.hasMany(TransactionLog, {
 TransactionLog.belongsTo(User, {
     foreignKey: 'user_id',
     targetKey: 'id',
-    as: 'transactions',
+    as: 'transaction_user',
     onDelete: 'cascade'
 })
 
@@ -29,7 +29,7 @@ User.hasMany(Pledge, {
 Pledge.belongsTo(User, {
     foreignKey: 'user_id',
     targetKey: 'id',
-    as: 'user_pledges',
+    as: 'pledge_user',
     onDelete: 'cascade'
 })
 
@@ -40,7 +40,7 @@ Campaign.hasMany(RewardTier, {
 RewardTier.belongsTo(Campaign, {
     foreignKey: 'campaign_id',
     targetKey: 'id',
-    as: 'reward_tiers',
+    as: 'reward_tier_campaign',
     onDelete: 'cascade'
 })
 
@@ -51,7 +51,7 @@ Campaign.hasMany(CampaignMilestone, {
 CampaignMilestone.belongsTo(Campaign, {
     foreignKey: 'campaign_id',
     targetKey: 'id',
-    as: 'campaign_milestones',
+    as: 'campaign_milestone_campaign',
     onDelete: 'cascade'
 })
 
@@ -62,7 +62,7 @@ Campaign.hasMany(Pledge, {
 Pledge.belongsTo(Campaign, {
     foreignKey: 'campaign_id',
     targetKey: 'id',
-    as: 'campaign_pledges',
+    as: 'pledge_campaign',
     onDelete: 'cascade'
 })
 
@@ -73,6 +73,6 @@ Pledge.hasOne(TransactionLog, {
 TransactionLog.belongsTo(Pledge, {
     foreignKey: 'pledge_id',
     targetKey: 'id',
-    as: 'transaction',
+    as: 'transaction_pledge',
     onDelete: 'cascade'
 })
