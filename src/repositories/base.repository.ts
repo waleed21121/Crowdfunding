@@ -8,7 +8,7 @@ export default abstract class BaseRepository<M extends Model> {
     }
 
     async create(data: MakeNullishOptional<M["_creationAttributes"]>): Promise<M> {
-        return await this.model.create();
+        return await this.model.create(data);
     }
 
     async delete(options: DestroyOptions<M>): Promise<number> {
