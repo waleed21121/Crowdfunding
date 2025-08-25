@@ -6,6 +6,8 @@ import { RewardTierSchema, IRewardTier } from "./rewardTier/rewardTier.schema";
 import { TransactionLogSchema, ITransactionLog } from "./transaction/transactionLog.schema";
 import { CampaignMilestoneSchema, ICampaignMilestone } from "./campaignMilestone/campaignMilestone.schema";
 import { CampaignQuerySchema, ICampaignQuerySchema } from "./queryParameters/campain.query.schema";
+import { UpdateCampaignSchema, IUpdateCampaignSchema } from "./campaign/updateCampaign.schema";
+
 
 
 export {
@@ -23,5 +25,7 @@ export {
     CampaignMilestoneSchema,
     ICampaignMilestone,
     CampaignQuerySchema,
-    ICampaignQuerySchema
+    ICampaignQuerySchema,
+    UpdateCampaignSchema,
+    IUpdateCampaignSchema
 }

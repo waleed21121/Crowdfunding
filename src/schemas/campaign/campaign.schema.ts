@@ -18,7 +18,7 @@ export const CampaignSchema = z.object({
         .default(0.00),
     deadline: z
         .date({ message: 'Deadline is required' })
-        .refine((date) => date > new Date(), 'Deadline must be in the future').optional(),
+        .refine((date) => date > new Date(), 'Deadline must be in the future'),
     status: z
         .enum(['active', 'successful', 'failed'], 'Status must be one of: active, successful, failed' )
         .default('active'),
