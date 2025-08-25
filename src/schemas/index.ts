@@ -8,7 +8,8 @@ import { CampaignMilestoneSchema, ICampaignMilestone } from "./campaignMilestone
 import { CampaignQuerySchema, ICampaignQuerySchema } from "./queryParameters/campain.query.schema";
 import { UpdateCampaignSchema, IUpdateCampaignSchema } from "./campaign/updateCampaign.schema";
 import { IDSchema } from "./common/id.schema";
-
+import { LoginUserSchema, ILoginUser } from "./user/login.schema";
+import { VerifyUserSchema, IVerifyUser } from "./user/verify.schema";
 
 export {
     EnvSchema,
@@ -28,5 +29,9 @@ export {
     ICampaignQuerySchema,
     UpdateCampaignSchema,
     IUpdateCampaignSchema,
-    IDSchema
+    IDSchema,
+    LoginUserSchema,
+    ILoginUser,
+    VerifyUserSchema,
+    IVerifyUser
 }

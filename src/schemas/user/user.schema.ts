@@ -5,7 +5,7 @@ export const UserSchema = z.object({
         .string({ message: 'Email is required' })
         .email('Email must be a valid email address')
         .max(255, 'Email must not exceed 255 characters'),
-    password_hash: z
+    password: z
         .string({ message: 'Password is required' })
         .min(8, 'Password must be at least 8 characters')
         .max(255, 'Password must not exceed 255 characters'),
