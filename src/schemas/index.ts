@@ -7,7 +7,7 @@ import { TransactionLogSchema, ITransactionLog } from "./transaction/transaction
 import { CampaignMilestoneSchema, ICampaignMilestone } from "./campaignMilestone/campaignMilestone.schema";
 import { CampaignQuerySchema, ICampaignQuerySchema } from "./queryParameters/campain.query.schema";
 import { UpdateCampaignSchema, IUpdateCampaignSchema } from "./campaign/updateCampaign.schema";
-
+import { IDSchema } from "./common/id.schema";
 
 
 export {
@@ -27,5 +27,6 @@ export {
     CampaignQuerySchema,
     ICampaignQuerySchema,
     UpdateCampaignSchema,
-    IUpdateCampaignSchema
+    IUpdateCampaignSchema,
+    IDSchema
 }
