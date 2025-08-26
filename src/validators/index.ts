@@ -7,6 +7,16 @@ import {
     TUpdateCampaign
 } from "./campaign.validators";
 
+import {
+    createUserValidator,
+    TCreateUser,
+    loginUserValidator,
+    TLoginUser,
+    verifyUserValidator,
+    TVerifyUser
+} from './user.validators'
+
+
 import { idValidator, TIdValidator } from "./id.validator";
 
 export {
@@ -17,5 +27,11 @@ export {
     updateCampaignValidator,
     TUpdateCampaign,
     idValidator,
-    TIdValidator
+    TIdValidator,
+    createUserValidator,
+    TCreateUser,
+    loginUserValidator,
+    TLoginUser,
+    verifyUserValidator,
+    TVerifyUser
 }
