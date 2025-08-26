@@ -17,6 +17,11 @@ import {
 } from './user.validators'
 
 
+import {
+    createCampaignMilestoneValidator,
+    TCreateCampaignMilestone
+} from './campaignMilestone.validators'
+
 import { idValidator, TIdValidator } from "./id.validator";
 
 export {
@@ -33,5 +38,7 @@ export {
     loginUserValidator,
     TLoginUser,
     verifyUserValidator,
-    TVerifyUser
+    TVerifyUser,
+    createCampaignMilestoneValidator,
+    TCreateCampaignMilestone
 }
