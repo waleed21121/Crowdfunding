@@ -16,11 +16,15 @@ import {
     TVerifyUser
 } from './user.validators'
 
-
 import {
     createCampaignMilestoneValidator,
     TCreateCampaignMilestone
 } from './campaignMilestone.validators'
+
+import {
+    createRewardTierValidator,
+    TCreateRewardTier
+} from './rewardTier.validators'
 
 import { idValidator, TIdValidator } from "./id.validator";
 
@@ -40,5 +44,7 @@ export {
     verifyUserValidator,
     TVerifyUser,
     createCampaignMilestoneValidator,
-    TCreateCampaignMilestone
+    TCreateCampaignMilestone,
+    createRewardTierValidator,
+    TCreateRewardTier
 }
