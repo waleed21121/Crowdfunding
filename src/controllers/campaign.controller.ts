@@ -19,18 +19,18 @@ const findAll: TFindCampaigns = async (req, res: Response<ICampaignResponse>, ne
     const campaign = await campaignService.findAll(req.query)
     res.status(StatusCodes.OK).send({
         success: true,
-        message: 'Campaign found successfully',
+        message: 'Campaigns found successfully',
         data: campaign,
         error: null
     });
 }
 
 const findOne: TIdValidator = async (req, res: Response<ICampaignResponse>, next: NextFunction) => {
-    const campaign = await campaignService.findOne(req.params.id)
+    const campaigns = await campaignService.findOne(req.params.id)
     res.status(StatusCodes.OK).send({
         success: true,
-        message: 'Campaign created successfully',
-        data: campaign,
+        message: 'Campaign found successfully',
+        data: campaigns,
         error: null
     });
 }
@@ -39,7 +39,7 @@ const update: TUpdateCampaign = async (req, res: Response<ICampaignResponse>, ne
     const campaign = await campaignService.update(req.body, req.params.id)
     res.status(StatusCodes.OK).send({
         success: true,
-        message: 'Campaign created successfully',
+        message: 'Campaign updated successfully',
         data: campaign,
         error: null
     });
