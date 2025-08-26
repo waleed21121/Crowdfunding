@@ -17,6 +17,7 @@ async function findOne(id: number) {
     if(!campaign) {
         throw new AppError(StatusCodes.NOT_FOUND, "Not found", notFoundWithID('Campaign'));
     }
+    return campaign;
 }
 
 async function create(data: ICampaign) {
@@ -48,7 +49,8 @@ async function update(data: IUpdateCampaignSchema, id: number) {
 const campaignService = {
     findAll,
     create,
-    findOne
+    findOne,
+    update
 }
 
 export default campaignService
