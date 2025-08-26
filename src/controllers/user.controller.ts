@@ -5,7 +5,7 @@ import { StatusCodes } from "http-status-codes";
 import { TLoginUser, TCreateUser, TVerifyUser } from "../validators";
 import { TIdValidator } from '../validators/id.validator'
 
-const createUser: TCreateUser = async (req, res: Response<IUserResponse>, next: NextFunction) => {
+const create: TCreateUser = async (req, res: Response<IUserResponse>, next: NextFunction) => {
     const user = await userService.create(req.body);
     res.status(StatusCodes.CREATED).send({
         success: true,
@@ -15,7 +15,7 @@ const createUser: TCreateUser = async (req, res: Response<IUserResponse>, next: 
     })
 }
 
-const loginUser: TLoginUser = async (req, res: Response<IUserAuthResponse>, next:NextFunction) => {
+const login: TLoginUser = async (req, res: Response<IUserAuthResponse>, next:NextFunction) => {
     const tokens = await userService.login(req.body);
     res.status(StatusCodes.OK).send({
         success: true,
@@ -25,7 +25,7 @@ const loginUser: TLoginUser = async (req, res: Response<IUserAuthResponse>, next
     })
 }
 
-const verifyUser: TVerifyUser = async (req, res: Response<IUserResponse>, next:NextFunction) => {
+const verify: TVerifyUser = async (req, res: Response<IUserResponse>, next:NextFunction) => {
     const user = await userService.verify(req.query);
     res.status(StatusCodes.OK).send({
         success: true,
@@ -35,7 +35,7 @@ const verifyUser: TVerifyUser = async (req, res: Response<IUserResponse>, next:N
     })
 }
 
-const findUsers = async (req:Request, res: Response<IUserResponse>, next: NextFunction) => {
+const findAll = async (req:Request, res: Response<IUserResponse>, next: NextFunction) => {
     const users = await userService.findAll();
     res.status(StatusCodes.OK).send({
         success: true,
@@ -45,7 +45,7 @@ const findUsers = async (req:Request, res: Response<IUserResponse>, next: NextFu
     })
 }
 
-const findUser: TIdValidator = async (req, res: Response<IUserResponse>, next) => {
+const findOne: TIdValidator = async (req, res: Response<IUserResponse>, next) => {
     const user = await userService.findOne(req.params.id);
     res.status(StatusCodes.OK).send({
         success: true,
@@ -65,13 +65,13 @@ const deleteUser: TIdValidator = async (req, res: Response<IUserResponse>, next)
     })
 }
 
-const UserController = {
-    createUser,
-    findUsers,
-    findUser,
+const userController = {
+    create,
+    findAll,
+    findOne,
     deleteUser,
-    loginUser,
-    verifyUser
+    login,
+    verify
 }
 
-export default UserController
+export default userController
