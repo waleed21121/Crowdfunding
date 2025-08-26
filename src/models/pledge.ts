@@ -7,8 +7,8 @@ interface PledgeAttributes {
   amount: number;
   reward_id: number;
   status: 'pending' | 'confirmed' | 'refunded';
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class Pledge extends Model<PledgeAttributes, Partial<PledgeAttributes>> implements PledgeAttributes {
@@ -18,8 +18,8 @@ export class Pledge extends Model<PledgeAttributes, Partial<PledgeAttributes>> i
   amount: number;
   reward_id: number;
   status: 'pending' | 'confirmed' | 'refunded';
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 
   static initModel(sequelize: Sequelize): typeof Pledge {
     return Pledge.init(
@@ -67,11 +67,11 @@ export class Pledge extends Model<PledgeAttributes, Partial<PledgeAttributes>> i
           allowNull: false,
           defaultValue: 'pending',
         },
-        created_at: {
+        createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
         },
-        updated_at: {
+        updatedAt: {
           type: DataTypes.DATE,
           allowNull: false,
         }

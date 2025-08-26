@@ -6,8 +6,8 @@ interface CampaignMilestoneAttributes {
   title: string;
   target_amount: number;
   achieved: boolean;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class CampaignMilestone extends Model<CampaignMilestoneAttributes, Partial<CampaignMilestoneAttributes>> implements CampaignMilestoneAttributes {
@@ -16,8 +16,8 @@ export class CampaignMilestone extends Model<CampaignMilestoneAttributes, Partia
   title: string;
   target_amount: number;
   achieved: boolean;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 
   static initModel(sequelize: Sequelize): typeof CampaignMilestone {
     return CampaignMilestone.init(
@@ -51,11 +51,11 @@ export class CampaignMilestone extends Model<CampaignMilestoneAttributes, Partia
           allowNull: false,
           defaultValue: false,
         },
-        created_at: {
+        createdAt: {
           type: DataTypes.DATE,
           allowNull: false
         },
-        updated_at: {
+        updatedAt: {
           type: DataTypes.DATE,
           allowNull: false
         }

@@ -6,7 +6,7 @@ import { AppError, campaignQuery, notFoundWithFilters, notFoundWithID } from "..
 async function findAll(queryParameters: ICampaignQuerySchema) {
     const queryObject = campaignQuery(queryParameters);
     const campaigns = await campaignRepository.findAll(queryObject);
-    if(!campaigns) {
+    if(campaigns.length === 0) {
         throw new AppError(StatusCodes.NOT_FOUND, "Not found", notFoundWithFilters('Campaigns'));
     }
     return campaigns;

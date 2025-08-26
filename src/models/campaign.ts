@@ -9,8 +9,8 @@ interface CampaignAttributes {
   current_funds: number;
   deadline: Date;
   status: 'active' | 'successful' | 'failed';
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class Campaign extends Model<CampaignAttributes, Partial<CampaignAttributes>> implements CampaignAttributes {
@@ -22,8 +22,8 @@ export class Campaign extends Model<CampaignAttributes, Partial<CampaignAttribut
   current_funds: number;
   deadline: Date;
   status: 'active' | 'successful' | 'failed';
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 
   static initModel(sequelize: Sequelize): typeof Campaign {
     return Campaign.init({
@@ -70,11 +70,11 @@ export class Campaign extends Model<CampaignAttributes, Partial<CampaignAttribut
           allowNull: false,
           defaultValue: 'active',
         },
-        created_at: {
+        createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
         },
-        updated_at: {
+        updatedAt: {
           type: DataTypes.DATE,
           allowNull: false,
         },

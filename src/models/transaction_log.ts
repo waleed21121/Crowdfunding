@@ -6,8 +6,8 @@ interface TransactionLogAttributes {
   pledge_id: number | null;
   amount: number;
   type: 'pledge' | 'refund' | 'deposit';
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class TransactionLog extends Model<TransactionLogAttributes, Partial<TransactionLogAttributes>> implements TransactionLogAttributes {
@@ -16,8 +16,8 @@ export class TransactionLog extends Model<TransactionLogAttributes, Partial<Tran
   pledge_id: number | null;
   amount: number;
   type: 'pledge' | 'refund' | 'deposit';
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 
   static initModel(sequelize: Sequelize): typeof TransactionLog {
     return TransactionLog.init(
@@ -54,11 +54,11 @@ export class TransactionLog extends Model<TransactionLogAttributes, Partial<Tran
           type: DataTypes.ENUM('pledge', 'refund', 'deposit'),
           allowNull: false,
         },
-        created_at: {
+        createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
         },
-        updated_at: {
+        updatedAt: {
           type: DataTypes.DATE,
           allowNull: false,
         },

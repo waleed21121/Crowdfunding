@@ -2,6 +2,7 @@ import express from 'express';
 import { envVariables, logger } from './config';
 import { DBConnect } from './models';
 import { errorHandler, requestLogger } from './middlewares';
+import router from './routes';
 
 const app = express();
 app.use(express.json());
@@ -9,11 +10,8 @@ app.use(express.json());
 // Logger middleware
 app.use(requestLogger)
 
-app.get('/api', (req, res) => {
-    res.send({
-        msg: 'Hello, world!!!'
-    })
-});
+// App routers
+app.use('/api', router);
 
 // Error middleware
 app.use(errorHandler);

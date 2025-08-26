@@ -8,8 +8,8 @@ interface RewardTierAttributes {
   pledge_amount: number;
   quantity_available: number;
   quantity_claimed: number;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class RewardTier extends Model<RewardTierAttributes, Partial<RewardTierAttributes>> implements RewardTierAttributes {
@@ -20,8 +20,8 @@ export class RewardTier extends Model<RewardTierAttributes, Partial<RewardTierAt
   pledge_amount: number;
   quantity_available: number;
   quantity_claimed: number;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 
   static initModel(sequelize: Sequelize): typeof RewardTier {
     return RewardTier.init(
@@ -63,11 +63,11 @@ export class RewardTier extends Model<RewardTierAttributes, Partial<RewardTierAt
           allowNull: false,
           defaultValue: 0,
         },
-        created_at: {
+        createdAt: {
           type: DataTypes.DATE,
           allowNull: false
         },
-        updated_at: {
+        updatedAt: {
           type: DataTypes.DATE,
           allowNull: false
         }
