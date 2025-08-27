@@ -13,7 +13,6 @@ export const PledgeSchema = z.object({
     reward_id: z
         .int({ message: 'Reward ID must be an integer' })
         .gte(1, "Reward ID must be positive integer")
-        .nullable()
         .optional(),
     status: z
         .enum(['pending', 'confirmed', 'refunded'], 'Status must be one of: pending, confirmed, refunded' )
