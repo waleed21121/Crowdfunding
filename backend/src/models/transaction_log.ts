@@ -65,7 +65,7 @@ export class TransactionLog extends Model<TransactionLogAttributes, Partial<Tran
       },
       {
         sequelize,
-        modelName: 'TransactionLog',
+        modelName: 'Transaction_log',
       }
     );
   }

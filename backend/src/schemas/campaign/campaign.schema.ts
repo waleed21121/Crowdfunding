@@ -17,6 +17,7 @@ export const CampaignSchema = z.object({
         .gte(0, 'Current funds must be non-negative')
         .default(0.00),
     deadline: z
+        .coerce
         .date({ message: 'Deadline is required' })
         .refine((date) => date > new Date(), 'Deadline must be in the future'),
     status: z
