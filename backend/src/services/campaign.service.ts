@@ -46,11 +46,44 @@ async function update(data: IUpdateCampaignSchema, id: number) {
     return updatedCampaign[1][0];
 }
 
+async function findAllMilestones(id: number) {
+    const campaign = await campaignRepository.finOne({where: {id: id}});
+    if(!campaign) {
+        throw new AppError(StatusCodes.NOT_FOUND, "Not found", notFoundWithID('Campaign'));
+    }
+
+    const milestones = await campaignRepository.findAllMilestones(id);
+
+    if(milestones.length === 0) {
+        throw new AppError(StatusCodes.NOT_FOUND, "Not found", notFoundWithFilters('Milestones'));
+    }
+
+    return milestones;
+}
+
+async function findAllRewardTiers(id: number) {
+    const campaign = await campaignRepository.finOne({where: {id: id}});
+    if(!campaign) {
+        throw new AppError(StatusCodes.NOT_FOUND, "Not found", notFoundWithID('Campaign'));
+    }
+
+    const rewardTiers = await campaignRepository.findAllRewardTiers(id);
+
+    if(rewardTiers.length === 0) {
+        throw new AppError(StatusCodes.NOT_FOUND, "Not found", notFoundWithFilters('Reward tiers'));
+    }
+
+    return rewardTiers;
+}
+
+
 const campaignService = {
     findAll,
     create,
     findOne,
-    update
+    update,
+    findAllMilestones,
+    findAllRewardTiers
 }
 
 export default campaignService
