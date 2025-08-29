@@ -2,6 +2,8 @@ import { StatusCodes } from "http-status-codes";
 import { campaignRepository, userRepository } from "../repositories"
 import { ICampaign, ICampaignQuerySchema, IUpdateCampaignSchema } from "../schemas";
 import { AppError, campaignQuery, notFoundWithFilters, notFoundWithID } from "../utils";
+import { sequelize } from "../models";
+import { Transaction } from "sequelize";
 
 async function findAll(queryParameters: ICampaignQuerySchema) {
     const queryObject = campaignQuery(queryParameters);
@@ -21,13 +23,21 @@ async function findOne(id: number) {
 }
 
 async function create(data: ICampaign) {
-    const user = await userRepository.finOne({where: {id: data.user_id}});
-    if(!user) {
-        throw new AppError(StatusCodes.NOT_FOUND, "Not found", notFoundWithID('User'));
-    }
+    const transaction = await sequelize.transaction({isolationLevel: Transaction.ISOLATION_LEVELS.REPEATABLE_READ});
+    try {
+        const user = await userRepository.finOne({where: {id: data.user_id}}, transaction);
+        if(!user) {
+            throw new AppError(StatusCodes.NOT_FOUND, "Not found", notFoundWithID('User'));
+        }
 
-    const campaign = await campaignRepository.create(data);
-    return campaign;
+        const campaign = await campaignRepository.create(data, transaction);
+        await transaction.commit();
+
+        return campaign;
+    } catch (error) {
+        await transaction.rollback();
+        throw error;
+    }
 }
 
 async function update(data: IUpdateCampaignSchema, id: number) {
