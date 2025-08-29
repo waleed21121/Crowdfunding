@@ -13,7 +13,9 @@ import {
     loginUserValidator,
     TLoginUser,
     verifyUserValidator,
-    TVerifyUser
+    TVerifyUser,
+    DepositValidator,
+    TDeposit
 } from './user.validators'
 
 import {
@@ -53,5 +55,7 @@ export {
     createRewardTierValidator,
     TCreateRewardTier,
     createPledgeValidator,
-    TCreatePledge
+    TCreatePledge,
+    DepositValidator,
+    TDeposit
 }

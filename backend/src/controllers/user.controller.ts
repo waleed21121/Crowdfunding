@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { userService } from "../services";
 import { IUserResponse, IUserAuthResponse } from "../dtos";
 import { StatusCodes } from "http-status-codes";
-import { TLoginUser, TCreateUser, TVerifyUser } from "../validators";
+import { TLoginUser, TCreateUser, TVerifyUser, TDeposit } from "../validators";
 import { TIdValidator } from '../validators/id.validator'
 
 const create: TCreateUser = async (req, res: Response<IUserResponse>, next: NextFunction) => {
@@ -65,13 +65,24 @@ const deleteUser: TIdValidator = async (req, res: Response<IUserResponse>, next)
     })
 }
 
+const deposit: TDeposit = async (req, res: Response<IUserResponse>, next) => {
+    const user = await userService.deposit(req.body, req.params.id);
+    res.status(StatusCodes.OK).send({
+        success: true,
+        message: 'Successfully deposited your money',
+        data: user,
+        error: null
+    })
+}
+
 const userController = {
     create,
     findAll,
     findOne,
     deleteUser,
     login,
-    verify
+    verify,
+    deposit
 }
 
 export default userController

@@ -10,6 +10,7 @@ import { UpdateCampaignSchema, IUpdateCampaignSchema } from "./campaign/updateCa
 import { IDSchema } from "./common/id.schema";
 import { LoginUserSchema, ILoginUser } from "./user/login.schema";
 import { VerifyUserSchema, IVerifyUser } from "./user/verify.schema";
+import { DepositSchema, IDeposit } from './user/deposit.schema'
 
 export {
     EnvSchema,
@@ -33,5 +34,7 @@ export {
     LoginUserSchema,
     ILoginUser,
     VerifyUserSchema,
-    IVerifyUser
+    IVerifyUser,
+    DepositSchema,
+    IDeposit
 }
