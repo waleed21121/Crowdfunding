@@ -35,7 +35,7 @@ async function create(data: IPledge) {
         if(!campaign) {
             throw new AppError(StatusCodes.NOT_FOUND, "Not found", notFoundWithID('Campaign'));
         }
-        if(campaign.status !== 'active') {
+        if(campaign.status == 'failed') {
             throw new AppError(StatusCodes.BAD_REQUEST, "Bad request", "The campaign is not active anymore.");
         }
 
