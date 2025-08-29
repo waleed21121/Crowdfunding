@@ -1,9 +1,9 @@
 import { StatusCodes } from "http-status-codes";
-import { campaignRepository, userRepository } from "../repositories"
-import { ICampaign, ICampaignQuerySchema, IUpdateCampaignSchema } from "../schemas";
+import { campaignRepository, pledgeRepository, transactionLogRepository, userRepository } from "../repositories"
+import { ICampaign, ICampaignQuerySchema, ITransactionLog, IUpdateCampaignSchema } from "../schemas";
 import { AppError, campaignQuery, notFoundWithFilters, notFoundWithID } from "../utils";
 import { sequelize } from "../models";
-import { Transaction } from "sequelize";
+import { Op, Transaction } from "sequelize";
 
 async function findAll(queryParameters: ICampaignQuerySchema) {
     const queryObject = campaignQuery(queryParameters);
@@ -86,6 +86,73 @@ async function findAllRewardTiers(id: number) {
     return rewardTiers;
 }
 
+async function failedCampaigns() {
+    const dateNow = new Date();
+    const transaction = await sequelize.transaction({isolationLevel: Transaction.ISOLATION_LEVELS.SERIALIZABLE})
+    try {
+        const campaigns = await campaignRepository.update(
+            {
+                status: 'failed',
+            },
+            {
+                where: {
+                    [Op.and]: {
+                        deadline: {
+                            [Op.lte]: dateNow
+                        },
+                        status: 'active'
+                    }
+                },
+                returning: true
+            },
+            transaction
+        )
+        campaigns[1].forEach(async (campaign) => {
+            const pledges = await pledgeRepository.findAll({
+                where: {
+                    campaign_id: campaign.id,
+                    status: 'confirmed'
+                },
+                attributes: [
+                    'user_id',
+                    'amount'
+                ]
+            }, transaction)
+
+            pledges.forEach(async (pledge) => {
+                const user = await userRepository.finOne({where: {id: pledge.user_id}})
+                if(user) {
+                    await userRepository.update(
+                        {
+                            balance: +user.balance + pledge.amount
+                        },
+                        {
+                            where: {
+                                id: pledge.user_id
+                            },
+                            returning: true
+                        },
+                        transaction
+                    )
+
+                    const transactionLogPayload: ITransactionLog = {
+                        user_id: user.id,
+                        amount: pledge.amount,
+                        type: 'refund'
+                    }
+                    await transactionLogRepository.create(transactionLogPayload, transaction);
+                }
+            })
+        })
+
+        await transaction.commit();
+        
+    } catch (error) {
+        transaction.rollback();
+        throw error;
+    }
+
+}
 
 const campaignService = {
     findAll,
@@ -93,7 +160,8 @@ const campaignService = {
     findOne,
     update,
     findAllMilestones,
-    findAllRewardTiers
+    findAllRewardTiers,
+    failedCampaigns
 }
 
 export default campaignService
