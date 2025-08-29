@@ -1,9 +1,9 @@
 import { StatusCodes } from "http-status-codes";
-import { campaignRepository, pledgeRepository, RewarTierRepository, transactionLogRepository, userRepository } from "../repositories"
+import { campaignMilestoneRepository, campaignRepository, pledgeRepository, RewarTierRepository, transactionLogRepository, userRepository } from "../repositories"
 import { AppError, notFoundWithID } from "../utils";
 import { IPledge, ITransactionLog } from "../schemas";
 import { RewardTier, sequelize } from "../models";
-import { Transaction } from "sequelize";
+import { Op, Transaction } from "sequelize";
 
 async function findOne(id: number) {
     const pledge = await pledgeRepository.finOne({where: {id: id}});
@@ -62,7 +62,7 @@ async function create(data: IPledge) {
 
         console.log(data, campaign, user);
         
-        await campaignRepository.update(
+        const updatedCampaign = await campaignRepository.update(
             {
                 current_funds: (+campaign.current_funds + +data.amount),
                 status: ((+campaign.current_funds + +data.amount >= +campaign.funding_goal) ? 'successful' : 'active')
@@ -104,6 +104,23 @@ async function create(data: IPledge) {
             )
         }
 
+        await campaignMilestoneRepository.update(
+            {
+                achieved: true
+            },
+            {
+                where: {
+                    [Op.and]: {
+                        campaign_id: data.campaign_id,
+                        target_amount: {
+                            [Op.lte]: updatedCampaign[1][0].current_funds
+                        }
+                    }
+                },
+                returning: true
+            },
+            transaction
+        )
         const pledge = await pledgeRepository.create(data, transaction);
 
         const transactionLogPayload: ITransactionLog = {
@@ -123,6 +140,7 @@ async function create(data: IPledge) {
         throw error
     }
 }
+
 const pledgeService = {
     findOne,
     create
