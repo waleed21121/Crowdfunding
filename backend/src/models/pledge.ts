@@ -55,7 +55,7 @@ export class Pledge extends Model<PledgeAttributes, Partial<PledgeAttributes>> i
         },
         reward_id: {
           type: DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: true,
           references: { 
             model: 'Reward_tiers', 
             key: 'id' 
