@@ -26,6 +26,11 @@ import {
     TCreateRewardTier
 } from './rewardTier.validators'
 
+import {
+    createPledgeValidator,
+    TCreatePledge
+} from './pledge.validators'
+
 import { idValidator, TIdValidator } from "./id.validator";
 
 export {
@@ -46,5 +51,7 @@ export {
     createCampaignMilestoneValidator,
     TCreateCampaignMilestone,
     createRewardTierValidator,
-    TCreateRewardTier
+    TCreateRewardTier,
+    createPledgeValidator,
+    TCreatePledge
 }
