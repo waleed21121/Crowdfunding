@@ -1,13 +1,15 @@
 import { StatusCodes } from 'http-status-codes';
-import { userRepository } from '../repositories';
-import { IUser } from '../schemas';
-import { AppError } from '../utils';
+import { transactionLogRepository, userRepository } from '../repositories';
+import { IDeposit, ITransactionLog, IUser } from '../schemas';
+import { AppError, notFoundWithID } from '../utils';
 import { JWT } from '../utils';
 import { ILoginUser } from '../schemas';
 import * as crypto from 'crypto';
 import * as bcrypt from 'bcrypt';
 import { sendVerificationEmail } from '../config';
 import { IVerifyUser } from '../schemas';
+import { sequelize } from '../models';
+import { Transaction } from 'sequelize';
 
 
 async function create(data: IUser) {
@@ -122,13 +124,61 @@ async function deleteUser (id: number) {
     return response;
 }
 
+async function deposit(data: IDeposit, id: number) {
+    const transaction = await sequelize.transaction({isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED});
+    try {
+        const user = await userRepository.finOne(
+            {
+                where: {
+                    id: id
+                },
+                lock: Transaction.LOCK.UPDATE
+            },
+            transaction
+        )
+        if(!user) {
+            throw new AppError(StatusCodes.NOT_FOUND, "Not found", notFoundWithID('User'));
+        }
+
+        const updatedUser = await userRepository.update(
+            {
+                balance: +user.balance + +data.balance
+            }, 
+            {
+                where: {
+                    id: id
+                },
+                returning: true
+            },
+            transaction
+        )
+
+        const transactionLogPayload: ITransactionLog = {
+            user_id: id,
+            amount: data.balance,
+            type: 'deposit',
+            pledge_id: null
+        }
+        await transactionLogRepository.create(transactionLogPayload, transaction)
+
+        await transaction.commit();
+
+        return updatedUser[1][0];
+
+    } catch (error) {
+        transaction.rollback();
+        throw error;
+    }
+}
+
 const userService = {
     create,
     findAll,
     findOne,
     deleteUser,
     login,
-    verify
+    verify,
+    deposit,
 }
 
 export default userService

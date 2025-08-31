@@ -2,14 +2,19 @@ import z from "zod";
 
 export const TransactionLogSchema = z.object({
     user_id: z
+        .coerce
+        .number()
         .int({ message: 'User ID is required and must be an integer' })
         .gte(1, 'User ID must be a positive integer'),
     pledge_id: z
+        .coerce
+        .number()
         .int({ message: 'User ID is required and must be an integer' })
         .gte(1, 'User ID must be a positive integer')
         .nullable()
         .optional(),
     amount: z
+        .coerce
         .number({ message: 'Amount is required' })
         .min(1, 'The amount must be at least 1$'),
     type: z

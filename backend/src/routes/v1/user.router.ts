@@ -2,7 +2,7 @@ import { Router } from "express";
 import { userController} from "../../controllers";
 import { wrapErrorMiddleware } from "../../middlewares";
 import { idValidator } from "../../validators/id.validator";
-import { loginUserValidator, createUserValidator, verifyUserValidator } from "../../validators";
+import { loginUserValidator, createUserValidator, verifyUserValidator, DepositValidator } from "../../validators";
 
 const userRouter = Router();
 
@@ -21,5 +21,8 @@ userRouter.route('/verify-email')
 userRouter.route('/:id')
                 .get(idValidator, wrapErrorMiddleware(userController.findOne))
                 .delete(idValidator, wrapErrorMiddleware(userController.deleteUser));
+
+userRouter.route('/:id/deposit')
+                .post(DepositValidator, wrapErrorMiddleware(userController.deposit));
 
 export default userRouter;

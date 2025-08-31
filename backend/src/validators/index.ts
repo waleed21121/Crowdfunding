@@ -13,7 +13,9 @@ import {
     loginUserValidator,
     TLoginUser,
     verifyUserValidator,
-    TVerifyUser
+    TVerifyUser,
+    DepositValidator,
+    TDeposit
 } from './user.validators'
 
 import {
@@ -25,6 +27,11 @@ import {
     createRewardTierValidator,
     TCreateRewardTier
 } from './rewardTier.validators'
+
+import {
+    createPledgeValidator,
+    TCreatePledge
+} from './pledge.validators'
 
 import { idValidator, TIdValidator } from "./id.validator";
 
@@ -46,5 +53,9 @@ export {
     createCampaignMilestoneValidator,
     TCreateCampaignMilestone,
     createRewardTierValidator,
-    TCreateRewardTier
+    TCreateRewardTier,
+    createPledgeValidator,
+    TCreatePledge,
+    DepositValidator,
+    TDeposit
 }

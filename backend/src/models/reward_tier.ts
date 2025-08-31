@@ -74,7 +74,7 @@ export class RewardTier extends Model<RewardTierAttributes, Partial<RewardTierAt
       },
       {
         sequelize,
-        modelName: 'RewardTier',
+        modelName: 'Reward_tier',
       }
     );
   }

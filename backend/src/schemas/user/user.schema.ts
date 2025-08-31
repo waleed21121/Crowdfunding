@@ -10,6 +10,7 @@ export const UserSchema = z.object({
         .min(8, 'Password must be at least 8 characters')
         .max(255, 'Password must not exceed 255 characters'),
     balance: z
+        .coerce
         .number({ message: 'Balance is required' })
         .gte(0, 'Balance must be non-negative')
         .default(0.00),

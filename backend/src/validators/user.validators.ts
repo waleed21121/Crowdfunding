@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { validationMiddleware } from "../middlewares";
 import { UserSchema } from "../schemas/user/user.schema";
-import { LoginUserSchema } from "../schemas";
+import { DepositSchema, IDSchema, LoginUserSchema } from "../schemas";
 import { VerifyUserSchema } from "../schemas";
 
 
@@ -13,3 +13,6 @@ export type TLoginUser = typeof loginUserValidator
 
 export const verifyUserValidator = validationMiddleware(z.object({}), z.object({}), VerifyUserSchema);
 export type TVerifyUser = typeof verifyUserValidator
+
+export const DepositValidator = validationMiddleware(IDSchema, DepositSchema, z.object({}));
+export type TDeposit = typeof DepositValidator

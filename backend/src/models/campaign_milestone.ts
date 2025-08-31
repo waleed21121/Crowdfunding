@@ -62,7 +62,7 @@ export class CampaignMilestone extends Model<CampaignMilestoneAttributes, Partia
       },
       {
         sequelize,
-        modelName: 'CampaignMilestone',
+        modelName: 'Campaign_milestone',
       }
     );
   }

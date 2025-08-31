@@ -76,3 +76,14 @@ TransactionLog.belongsTo(Pledge, {
     as: 'transaction_pledge',
     onDelete: 'cascade'
 })
+
+RewardTier.hasMany(Pledge, {
+    foreignKey: 'reward_id'
+})
+
+Pledge.belongsTo(RewardTier, {
+    foreignKey: 'reward_id',
+    targetKey: 'id',
+    as: 'pledge_reward',
+    onDelete: 'cascade'
+})

@@ -1,4 +1,6 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
+import { User } from './user';
+import { RewardTier } from './reward_tier';
 
 interface PledgeAttributes {
   id: number;
@@ -9,6 +11,9 @@ interface PledgeAttributes {
   status: 'pending' | 'confirmed' | 'refunded';
   createdAt: Date;
   updatedAt: Date;
+
+  user?: User;
+  reward?: RewardTier;
 }
 
 export class Pledge extends Model<PledgeAttributes, Partial<PledgeAttributes>> implements PledgeAttributes {
@@ -20,7 +25,9 @@ export class Pledge extends Model<PledgeAttributes, Partial<PledgeAttributes>> i
   status: 'pending' | 'confirmed' | 'refunded';
   createdAt: Date;
   updatedAt: Date;
-
+  user?: User;
+  reward?: RewardTier;
+  
   static initModel(sequelize: Sequelize): typeof Pledge {
     return Pledge.init(
       {
@@ -55,7 +62,7 @@ export class Pledge extends Model<PledgeAttributes, Partial<PledgeAttributes>> i
         },
         reward_id: {
           type: DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: true,
           references: { 
             model: 'Reward_tiers', 
             key: 'id' 
