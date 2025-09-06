@@ -1,3 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Outfit", sans-serif;
+    box-sizing: border-box;
+}
+
+.container {
+    @apply mx-auto w-full px-[10px] md:w-[590px] md:w-[700px] lg:w-[980px] xl:w-[1200px] !important;
+}
+
+img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.gridSection {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2,1fr);
+}
+
+@media (width<=776px) {
+    .gridSection {
+        grid-template-columns: auto;
+    }
+}

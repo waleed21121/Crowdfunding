@@ -1,0 +1,59 @@
+.campaignCard {
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #eee;
+}
+
+.campaignCard .title,
+.campaignCard .currentFunds {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.campaignCard .title .name {
+    text-transform: capitalize;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.campaignCard .title .funingGoal {
+    
+}
+
+.campaignCard .currentFunds {
+    margin: 10px 0;
+}
+
+.campaignCard .currentFunds .currentFund {
+
+}
+
+.campaignCard .currentFunds .deadline {
+
+}
+
+.campaignCard .status {
+    width: fit-content;
+    background-color: rgb(255, 191, 0);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: capitalize;
+    place-self: end;
+}
+
+.campaignCard .status.failed {
+    background-color:red;
+}
+
+.campaignCard .status.active {
+    background-color: rgb(255, 191, 0);
+}
+
+.campaignCard .status.successful {
+    background-color:green;
+}
+

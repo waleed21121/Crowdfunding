@@ -1,0 +1,18 @@
+.error_page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.error_page .icon {
+    font-size: 70px;
+    color: red;
+}
+
+.error_page p {
+    color: red;
+    text-transform: capitalize;
+    font-weight: 600;
+}
