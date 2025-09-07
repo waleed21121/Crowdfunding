@@ -1,10 +1,159 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './styleOfPages/login.css'
+import Joi from 'joi'
 
 const Login = () => {
+    const [isSignUp,setIsSignUp]=useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        balance: ''
+    })
+    const [errors,setErrors] =useState({});
+
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setFormData({ ...formData, [name]: value })
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if(validateFrom().error) {
+            setErrors(getErrors(validateFrom().error.details));
+            return;
+        }
+        else {
+            console.log('added');
+            clearData();
+            // add user
+        }
+    }
+
+
+
+
+
+    let validateFrom =()=> {
+        let schema = Joi.object({
+            name : Joi.string().required().min(3).messages({
+                'string.empty': 'Name is required.',
+                'string.min': 'First name must be at least 3 characters.',
+            }),
+            password : Joi.string().required().messages({
+                'string.empty': 'Password is required.',
+            }),
+            email : Joi.string().email({ tlds: { allow: false } }).required().messages({
+                'string.empty': 'Email is required.',
+                'string.email': 'Please enter a valid email address.',
+            }),
+            balance : Joi.number().required().min(0).messages({
+                'any.empty': 'Balance is required.',
+                'string.min': 'Balance must be greater than or equal zero',
+                'string.base': 'Balance must be a number.',
+            })
+        });
+
+
+        return schema.validate(formData,{abortEarly: false});
+    }
+
+
+    let getErrors = (details)=> {
+        const errors = {};
+        details.forEach((err) => {
+            const field = err.path?.[0];
+            if (field && !errors[field]) {
+                errors[field] = err.message.replace(/\"/g, "");
+            }
+        });
+        // console.log(errors)
+        return errors;
+    }
+
+    let clearData = ()=> {
+        setFormData({
+            name: '',
+            email: '',
+            password: '',
+            balance: ''
+        });
+        setErrors({});
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     return (
-        <div>
-            login
+        <div className="login-container">
+        <form className="login-form" onSubmit={handleSubmit}>
+            {!isSignUp? <h2>sign up</h2> : <h2>Log in</h2>}
+
+            <label>Name</label>
+            <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            />
+            {errors.name && <p className='error'>{errors.name}</p>}
+
+            <label>Email</label>
+            <input
+            type="text"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            />
+            {errors.email && <p className='error'>{errors.email}</p>}
+
+            <label>Password</label>
+            <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            />
+            {errors.password && <p className='error'>{errors.password}</p>}
+
+            <label>Balance ($)</label>
+            <input
+            type="text"
+            name="balance"
+            value={formData.balance}
+            onChange={handleChange}
+            />
+            {errors.balance && <p className='error'>{errors.balance}</p>}
+            <div className="haveAccount">
+                <p>{isSignUp? 'have an account?' : 'new user?' }</p>
+                <button onClick={()=> setIsSignUp((old)=> !old)}>click here</button>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
         </div>
     )
 }
