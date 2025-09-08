@@ -2,36 +2,30 @@
     padding: 10px;
     border-radius: 5px;
     border: 2px solid #eee;
-}
-
-.campaignCard .title,
-.campaignCard .currentFunds {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    gap: 6px;
+    flex-direction: column;
 }
 
-.campaignCard .title .name {
+
+.campaignCard .title {
     text-transform: capitalize;
     font-size: 18px;
     font-weight: 600;
 }
 
-.campaignCard .title .funingGoal {
-    
+.campaignCard .fundingGoal,
+.campaignCard .currentFund,
+.campaignCard .deadline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-transform: capitalize;
+    font-size: .875rem;
+    font-weight: 500;
+    color: #333;
 }
 
-.campaignCard .currentFunds {
-    margin: 10px 0;
-}
-
-.campaignCard .currentFunds .currentFund {
-
-}
-
-.campaignCard .currentFunds .deadline {
-
-}
 
 .campaignCard .status {
     width: fit-content;
@@ -43,6 +37,7 @@
     font-size: 14px;
     text-transform: capitalize;
     place-self: end;
+    margin-top: 15px;
 }
 
 .campaignCard .status.failed {

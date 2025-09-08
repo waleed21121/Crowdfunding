@@ -4,14 +4,10 @@ import './card.css'
 const CampaignCard = ({campaign}) => {
     return (
         <div className='campaignCard'>
-            <div className="title">
-                <h1 className="name">{campaign.title}</h1>
-                <p className="funingGoal">{campaign.funding_goal}$</p>
-            </div>
-            <div className="currentFunds">
-                <p className='currentFund'>{campaign.current_funds}</p>
-                <p className='deadline'>{campaign.deadline}</p>
-            </div>
+            <h1 className="title">{campaign.title}</h1>
+            <p className="fundingGoal">funding goal <span>{campaign.funding_goal}$</span></p>
+            <p className='currentFund'>current funding <span>{campaign.current_funds}$</span></p>
+            <p className='deadline'>deadline <span>{campaign.deadline}</span></p>
             <p className={`status ${campaign.status}`}>{campaign.status}</p>
         </div>
     )

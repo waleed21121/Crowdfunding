@@ -155,12 +155,12 @@ const Campaigns = () => {
         },
     ]);
 
-    let {data,isError, isLoading} =useQuery({
-        queryKey : ['getCampaigns'],
-        queryFn : ()=> axios.get('/campaigns'),
-    })
+    // let {data,isError, isLoading} =useQuery({
+    //     queryKey : ['getCampaigns'],
+    //     queryFn : ()=> axios.get('http://localhost:3000/api/v1/campaigns'),
+    // })
 
-    // console.log(data.data);
+    // console.log(data);
 
 
     useEffect(()=> {
@@ -168,8 +168,8 @@ const Campaigns = () => {
     },[])
 
 
-    if(isLoading) return <Loading/>
-    if(isError) return <Error/>
+    // if(isLoading) return <Loading/>
+    // if(isError) return <Error/>
 
     return (
         <div className='allCampaigns'>

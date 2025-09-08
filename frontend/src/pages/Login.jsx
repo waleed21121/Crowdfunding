@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import './styleOfPages/login.css'
 import Joi from 'joi'
+import axios from 'axios'
 
 const Login = () => {
     const [isSignUp,setIsSignUp]=useState(false);
     const [formData, setFormData] = useState({
-        name: '',
         email: '',
         password: '',
-        balance: ''
+        balance: '',
+        name: '',
     })
     const [errors,setErrors] =useState({});
 
@@ -23,8 +24,9 @@ const Login = () => {
             setErrors(getErrors(validateFrom().error.details));
             return;
         }
-        else {
-            console.log('added');
+        else if (isSignUp) {
+            console.log('add new user');
+            addNewUser(formData);
             clearData();
             // add user
         }
@@ -33,7 +35,7 @@ const Login = () => {
 
 
 
-
+    // validate from
     let validateFrom =()=> {
         let schema = Joi.object({
             name : Joi.string().required().min(3).messages({
@@ -58,7 +60,7 @@ const Login = () => {
         return schema.validate(formData,{abortEarly: false});
     }
 
-
+    // get errors of validation
     let getErrors = (details)=> {
         const errors = {};
         details.forEach((err) => {
@@ -71,6 +73,7 @@ const Login = () => {
         return errors;
     }
 
+    // clear form after submit
     let clearData = ()=> {
         setFormData({
             name: '',
@@ -79,6 +82,11 @@ const Login = () => {
             balance: ''
         });
         setErrors({});
+    }
+
+    // add new user 
+    let addNewUser = async (userData)=> {
+        axios.post('http://localhost:3000/api/v1/register',userData).then((res)=> console.log(res));
     }
 
 
@@ -110,7 +118,7 @@ const Login = () => {
     return (
         <div className="login-container">
         <form className="login-form" onSubmit={handleSubmit}>
-            {!isSignUp? <h2>sign up</h2> : <h2>Log in</h2>}
+            {isSignUp? <h2>sign up</h2> : <h2>Log in</h2>}
 
             <label>Name</label>
             <input
