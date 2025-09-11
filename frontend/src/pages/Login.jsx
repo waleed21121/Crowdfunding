@@ -50,7 +50,7 @@ const Login = () => {
                 'string.email': 'Please enter a valid email address.',
             }),
             balance : Joi.number().required().min(0).messages({
-                'any.empty': 'Balance is required.',
+                'string.empty': 'Balance is required.',
                 'string.min': 'Balance must be greater than or equal zero',
                 'string.base': 'Balance must be a number.',
             })
@@ -66,7 +66,7 @@ const Login = () => {
         details.forEach((err) => {
             const field = err.path?.[0];
             if (field && !errors[field]) {
-                errors[field] = err.message.replace(/\"/g, "");
+                errors[field] = err.message;
             }
         });
         // console.log(errors)
