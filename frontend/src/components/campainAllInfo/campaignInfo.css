@@ -1,0 +1,73 @@
+.info {
+    border: 2px solid #eee;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 50px 0;
+}
+
+.info .main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    margin-top: 16px;
+}
+
+.info .main .name {
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+
+.info .status {
+    width: fit-content;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: capitalize;
+    place-self: end;
+}
+
+.info .status.failed {
+    background-color:red;
+}
+
+.info .status.active {
+    background-color: rgb(255, 191, 0);
+}
+
+.info .status.successful {
+    background-color:green;
+}
+
+
+.info .description {
+    margin: 24px 0;
+    line-height: 1.8;
+    font-size: 15px;
+    color: #333;
+}
+
+.info .commonP {
+    text-transform: capitalize;
+    font-weight: 500;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.info .current_funds {
+    
+}
+
+.info .deadline {
+    margin-bottom: 30px;
+}
+
+.info span {
+    color: #333;
+}
