@@ -19,6 +19,12 @@
     text-transform: capitalize;
 }
 
+@media (width <= 667px) {
+    .info .main .name {
+        font-size: 20px;
+    }
+}
+
 
 .info .status {
     width: fit-content;
@@ -49,6 +55,12 @@
     line-height: 1.8;
     font-size: 15px;
     color: #333;
+}
+
+@media (width <= 667px) {
+    .info .description {
+        font-size: .875rem
+    }
 }
 
 .info .commonP {

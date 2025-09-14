@@ -1,0 +1,33 @@
+.rewardTeir {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 2px solid #eee;
+    padding: 10px;
+}
+
+.rewardTeir .title {
+    text-transform: capitalize;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.rewardTeir .description {
+    font-size: .875rem;
+    line-height: 1.7;
+    color: #333;
+    margin: 10px 0;
+}
+
+.rewardTeir p:not(:first-of-type) {
+    text-transform: capitalize;
+    font-weight: 500;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: .875rem;
+}
+
+.rewardTeir p:not(:first-of-type) span {
+    color: #333;
+}

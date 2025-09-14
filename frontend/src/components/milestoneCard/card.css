@@ -1,0 +1,45 @@
+.milestone {
+    padding: 14px;
+    border-radius: 5px;
+    border: 2px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.milestone .title {
+    text-transform: capitalize;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.milestone .target_amount {
+    text-transform: capitalize;
+    font-weight: 500;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.milestone .target_amount span {
+    color: #333;
+}
+
+.milestone p {
+    width: fit-content;
+    padding: 5px 10px;
+    text-transform: capitalize;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    border-radius: 6px;
+    place-self: self-end;
+}
+
+.milestone .achieved {
+    background-color: green;
+}
+
+.milestone .notAchieved {
+    background-color: red;
+}

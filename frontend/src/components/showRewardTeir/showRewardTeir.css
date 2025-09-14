@@ -1,0 +1,16 @@
+.rewardTeir-container {
+    margin: 50px 0;
+}
+
+.rewardTeir-container > h1 {
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin: 20px 0;
+}
+
+.rewardTeir-container .rewardTeirs {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
+    gap: 1rem;
+}

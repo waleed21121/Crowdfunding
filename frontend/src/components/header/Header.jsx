@@ -9,7 +9,7 @@ const Header = () => {
             <div className="container">
                 <Link to={'/add-project'} className="addProject">
                     <FiPlus className='icon'/>
-                    <p>start a new project</p>
+                    <p>new project</p>
                 </Link>
                 <h1><Link to={'/'}>kickstarter</Link></h1>
                 <Link to={'/login'}>sign in</Link>
