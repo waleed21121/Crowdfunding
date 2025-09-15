@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './styleOfPages/addProject.css'
-import Joi, { string } from 'joi'
+import Joi, { number, string } from 'joi'
 
 const AddProject = () => {
     const [newCampaignData, setNewCampaignData] = useState({
@@ -43,9 +43,10 @@ const AddProject = () => {
                 'string.empty' :'Description is required',
                 'string.pattern.base': 'Description must contain only letters and spaces',
             }),
-            fundingGoal : Joi.number().required().messages({
+            fundingGoal : Joi.number().required().min(0).messages({
                 'string.empty' : 'Funding Goal is required',
-                'number.base': 'Funding Goal must be a number.'
+                'number.base': 'Funding Goal must be a number.',
+                'number.min' : 'Funding Goal must be a positive number.'
             }),
             deadline: Joi.date().greater('now').required().messages({
                 'date.empty' : 'Deadline is required',

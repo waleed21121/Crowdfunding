@@ -1,0 +1,75 @@
+    .reward-form {
+    background: #fff;
+    padding: 30px;
+    margin: 20px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    }
+
+    .reward-form h2 {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+    text-transform: capitalize;
+    }
+
+    .reward-form label {
+    margin: 8px 0 4px;
+    font-weight: 500;
+    color: #444;
+    }
+
+    .reward-form input,
+    .reward-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    margin-bottom: 12px;
+    transition: 0.3s;
+    font-size: 14px;
+    }
+
+    .reward-form input:focus,
+    .reward-form textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 4px rgba(40,167,69,0.4);
+    }
+
+    .reward-form button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s;
+    margin-top: 20px;
+    }
+
+    .reward-form button:hover {
+    background: #0056b3;
+    }
+    
+    .reward-form p.error {
+        color: red;
+        font-size: .875rem;
+    }
+
+    button.showAddRewardForm {
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-weight: 500;
+        font-size: 18px;
+        text-transform: capitalize;
+        color: white;
+        background-color: #0056b3;;
+        margin: 30px auto;
+        display: block;
+    }
