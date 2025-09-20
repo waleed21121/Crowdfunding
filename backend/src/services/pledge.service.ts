@@ -43,7 +43,8 @@ async function create(data: IPledge) {
         if (data.reward_id) {
             reward_tier = await RewarTierRepository.finOne({
                 where: {
-                    id: data.reward_id
+                    id: data.reward_id,
+                    campaign_id: data.campaign_id
                 }
             }, transaction)
             if(!reward_tier) {
