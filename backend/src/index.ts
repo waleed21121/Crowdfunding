@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { envVariables, logger } from './config';
 import { DBConnect } from './models';
 import { errorHandler, requestLogger } from './middlewares';
@@ -6,6 +7,11 @@ import { scheduler } from './utils';
 import router from './routes';
 
 const app = express();
+
+// Cors middleware
+app.use(cors())
+
+// Json middleware
 app.use(express.json());
 
 // Logger middleware
