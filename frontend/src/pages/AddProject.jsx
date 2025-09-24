@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import './styleOfPages/addProject.css'
 import Joi, { number, string } from 'joi'
+import axios from 'axios';
 
 const AddProject = () => {
     const [newCampaignData, setNewCampaignData] = useState({
         title: '',
         description: '',
-        fundingGoal: '',
+        funding_goal: '',
         deadline: ''
     });
 
@@ -26,9 +27,32 @@ const AddProject = () => {
         }
         else {
             // add request
+            addRequest();
             console.log('added');
-            clearData();
+            // clearData();
         }
+    }
+
+    // add request 
+    let addRequest =async function() {
+        // try {d
+        let data = {
+            ...newCampaignData,
+            user_id :1,
+            current_funds: 200,
+            status : 'active'
+        }
+            console.log(data)
+            fetch('http://localhost:3000/api/v1/campaigns',{
+                method : "POST",
+                body: JSON.stringify(data),
+                headers : {
+                    "Content-Type" : 'application/json'
+                }
+            }).then((res)=> {console.log(res) ; return res.json()}).then((data)=> console.log(data))
+        // } catch (error) {
+            // console.log(error)
+        // }d
     }
 
 
@@ -43,7 +67,7 @@ const AddProject = () => {
                 'string.empty' :'Description is required',
                 'string.pattern.base': 'Description must contain only letters and spaces',
             }),
-            fundingGoal : Joi.number().required().min(0).messages({
+            funding_goal : Joi.number().required().min(0).messages({
                 'string.empty' : 'Funding Goal is required',
                 'number.base': 'Funding Goal must be a number.',
                 'number.min' : 'Funding Goal must be a positive number.'
@@ -76,7 +100,7 @@ const AddProject = () => {
         setNewCampaignData({
             title: '',
             description: '',
-            fundingGoal: '',
+            funding_goal: '',
             deadline: ''
         });
         setErrors({});
@@ -108,11 +132,11 @@ const AddProject = () => {
                     <label>Funding Goal ($)</label>
                     <input
                     type="text"
-                    name="fundingGoal"
-                    value={newCampaignData.fundingGoal}
+                    name="funding_goal"
+                    value={newCampaignData.funding_goal}
                     onChange={handleChange}
                     />
-                    {errors.fundingGoal &&<p className="error">{errors.fundingGoal}</p>}
+                    {errors.funding_goal &&<p className="error">{errors.funding_goal}</p>}
                     <label>Deadline</label>
                     <input
                     type="date"

@@ -86,7 +86,14 @@ const Login = () => {
 
     // add new user 
     let addNewUser = async (userData)=> {
-        axios.post('http://localhost:3000/api/v1/register',userData).then((res)=> console.log(res));
+        // axios.post('http://localhost:3000/api/v1/register',userData).then((res)=> console.log(res));
+        fetch('http://localhost:3000/api/v1/users/register',{
+            method : 'POST',
+            body : JSON.stringify(userData),
+            headers : {
+                'Content-Type' : 'application/json',
+            }
+        }).then((res)=> { console.log(res); return res.json()}).then((data)=> console.log(data));
     }
 
 

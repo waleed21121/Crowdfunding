@@ -13,15 +13,23 @@ const Campaigns = () => {
 
     // let {data,isError, isLoading} =useQuery({
     //     queryKey : ['getCampaigns'],
-    //     queryFn : ()=> axios.get('http://localhost:3000/api/v1/campaigns'),
+    //     queryFn : ()=> axios.get('http://localhost:3000/api/v1/campaigns',{headers: {
+    //         "Content-Type" : 'application/json'
+    //     }}),
     // })
+    // console.log(data)
 
-    // console.log(data);
+    let getData= async ()=> {
+        fetch('',{headers: {"Content-Type" : 'application/json'}}).then((res)=> {
+            console.log(res);
+            return res.json();
+        }).then((data)=> {console.log(data)})
+    }
 
+useEffect(()=> {
+    getData();
+})
 
-    useEffect(()=> {
-        // setCampaigns(data.data);
-    },[])
 
 
     // if(isLoading) return <Loading/>
