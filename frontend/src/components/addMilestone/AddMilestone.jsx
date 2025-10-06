@@ -46,6 +46,7 @@ const AddMilestone = () => {
     
             onSuccess: ()=> {
                 toast.success('Campaign Milestone is added successfully');
+                window.location.reload();
                 clearData();
             },
     

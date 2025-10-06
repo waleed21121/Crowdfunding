@@ -52,6 +52,7 @@ import { useParams } from 'react-router';
 
         onSuccess: ()=> {
             toast.success('Campaign Rewardteir is added successfully');
+            window.location.reload();
             clearData();
         },
 
