@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './styleOfPages/login.css'
 import Joi from 'joi'
 import axios from 'axios'
+import { AppContext } from '../context/AppContext'
+import { toast } from 'react-toastify'
+import { useMutation } from '@tanstack/react-query'
 
 const Login = () => {
     const [isSignUp,setIsSignUp]=useState(false);
@@ -12,6 +15,27 @@ const Login = () => {
         name: '',
     })
     const [errors,setErrors] =useState({});
+    let {setUserData,setUserLogged}=useContext(AppContext);
+
+    let userMutation=useMutation({
+        mutationKey : ['login_register'],
+        mutationFn: (userData)=> axios.post(`http://localhost:3000/api/v1/users/${isSignUp? 'register' : 'login'}`
+            ,userData,{headers: {"Content-Type" : 'application/json'}}),
+        
+        onSuccess: (res)=> {
+            setUserLogged(true);
+            setUserData(res.data.data);
+            toast.success(res.data.message);
+            localStorage.setItem("saveLogin",true);
+            localStorage.setItem("currentUser",JSON.stringify(res.data.data));
+            clearData();
+        },
+
+        onError: (error) => {
+            toast.error(error.response.data.error);
+        }
+    })
+
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -24,15 +48,12 @@ const Login = () => {
             setErrors(getErrors(validateFrom().error.details));
             return;
         }
-        else if (isSignUp) {
-            console.log('add new user');
-            addNewUser(formData);
-            clearData();
-            // add user
+        else {
+            // add request
+            userMutation.mutate(formData);
+            // addNewUser(formData);
         }
     }
-
-
 
 
     // validate from
@@ -52,7 +73,7 @@ const Login = () => {
             balance : Joi.number().required().min(0).messages({
                 'string.empty': 'Balance is required.',
                 'string.min': 'Balance must be greater than or equal zero',
-                'string.base': 'Balance must be a number.',
+                'number.base': 'Balance must be a number.',
             })
         });
 
@@ -84,38 +105,39 @@ const Login = () => {
         setErrors({});
     }
 
-    // add new user 
-    let addNewUser = async (userData)=> {
-        // axios.post('http://localhost:3000/api/v1/register',userData).then((res)=> console.log(res));
-        fetch('http://localhost:3000/api/v1/users/register',{
-            method : 'POST',
-            body : JSON.stringify(userData),
-            headers : {
-                'Content-Type' : 'application/json',
-            }
-        }).then((res)=> { console.log(res); return res.json()}).then((data)=> console.log(data));
-    }
+    // register or login
+    // let addNewUser = async (userData)=> {
+    //     console.log(userData)
+    //     axios.post(`http://localhost:3000/api/v1/users/${isSignUp? 'register' : 'login'}`, userData, {
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //     }).then((res) => {
+    //         console.log(res);
+    //         console.log(res.data);
+
+    //         if(res.data.success) {
+    //             setUserLogged(true);
+    //             setUserData(res.data.data);
+    //             toast.success(res.data.message);
+    //             // console.log(res.data.data);
+    //         }
+    //     }).catch((err) => {
+    //         toast.error('Please verify your email');
+    //         console.error("Error:", err.response?.data || err.message);
+    //     });
+    // }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //     // fetch('http://localhost:3000/api/v1/users/register',{
+    //     //     method : 'POST',
+    //     //     body : JSON.stringify(userData),
+    //     //     headers : {
+    //     //         'Content-Type' : 'application/json',
+    //     //     }
+    //     // }).then((res)=> { console.log(res); return res.json()}).then((data)=> console.log(data));
+    // }
 
 
 
@@ -123,8 +145,8 @@ const Login = () => {
 
 
     return (
-        <div className="login-container">
-        <form className="login-form" onSubmit={handleSubmit}>
+        <div className="container">
+        <form className="login-form" onSubmit={(e)=> handleSubmit(e)}>
             {isSignUp? <h2>sign up</h2> : <h2>Log in</h2>}
 
             <label>Name</label>
@@ -164,10 +186,10 @@ const Login = () => {
             {errors.balance && <p className='error'>{errors.balance}</p>}
             <div className="haveAccount">
                 <p>{isSignUp? 'have an account?' : 'new user?' }</p>
-                <button onClick={()=> setIsSignUp((old)=> !old)}>click here</button>
+                <button onClick={()=> setIsSignUp((old)=> !old)} type='button'>click here</button>
             </div>
 
-            <button type="submit">Submit</button>
+            <button type='submit'>Submit</button>
         </form>
         </div>
     )

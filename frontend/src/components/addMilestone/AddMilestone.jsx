@@ -1,15 +1,23 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './addMilestone.css'
 import Joi from 'joi'
+import { useMutation } from '@tanstack/react-query'
+import axios from 'axios'
+import { AppContext } from '../../context/AppContext'
+import { toast } from 'react-toastify'
+import { useParams } from 'react-router'
 
-const AddMilestone = ({campaignId}) => {
+const AddMilestone = () => {
+    let {id}=useParams();
     const [milstoneData, setMilstoneData] = useState({
         title: '',
-        targetAmount: '',
-        achieved: 'false'
+        target_amount: '',
+        achieved: 'false',
+        campaign_id:id,
     })
     let [showAddMilestone,setShowMilstone]= useState(true);
     let [errors,setErrors]=useState({});
+    let {userLogged}=useContext(AppContext);
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -24,33 +32,47 @@ const AddMilestone = ({campaignId}) => {
         }
         else {
             // add request
-            console.log('added',{
-                campaignId,
-                ...milstoneData
-            });
-            clearData();
+            console.log(milstoneData)
+            milestone_mutation.mutate();
             setShowMilstone((old)=> !old);
         }
     }
 
 
-
-    // add validation 
-
+    // add request to get add campaign milestone
+    let milestone_mutation=useMutation({
+            mutationKey:['postMilestone'],
+            mutationFn: ()=> axios.post(`http://localhost:3000/api/v1/milestones`,
+                milstoneData,{headers:{'Content-Type' : 'application/json'}}
+            ),
+    
+            onSuccess: ()=> {
+                toast.success('Campaign Milestone is added successfully');
+                clearData();
+            },
+    
+            onError: (error)=> {
+                console.log(error)
+                toast.error('please try again');
+            }
+        })
+    
+    
+    // add validation
     let formValidation = ()=> {
         let schema = Joi.object({
             title : Joi.string().required().pattern(/^[A-Za-z\s]+$/).messages({
                 'string.empty' : 'Title is required',
                 'string.pattern.base': 'Title must contain only letters and spaces',
             }),
-            targetAmount : Joi.number().required().min(0).messages({
+            target_amount : Joi.number().required().min(0).messages({
                 'string.empty' : 'Target Amount is required',
                 'number.base': 'Target Amount must be a number.',
                 'number.min' : 'Target Amount must be a positive number.'
             }),
         })
 
-        return schema.validate({title :milstoneData.title,targetAmount: milstoneData.targetAmount},{abortEarly : false});
+        return schema.validate({title :milstoneData.title,target_amount: milstoneData.target_amount},{abortEarly : false});
     }
 
         //get errors of validation
@@ -62,25 +84,34 @@ const AddMilestone = ({campaignId}) => {
                 errors[field] = err.message;
             }
         });
-        console.log(errors)
+        // console.log(errors)
         return errors;
     }
     // clear data after submit
     // 
     let clearData = ()=> {
         setMilstoneData({
+            campaign_id: id,
             title: '',
-            targetAmount: '',
-            achieved: 'false'
+            target_amount: '',
+            achieved: false
         });
         setErrors({});
     }
 
+    let addBtnFunction=()=> {
+        if(userLogged) {
+            setShowMilstone((old)=> !old);
+        }
+        else {
+            toast.error('Please Sign or Register');
+        }
+    }
 
 
-    if(showAddMilestone) 
+    if(showAddMilestone)
         return (
-            <button className='showAddMilestoneForm' onClick={()=> setShowMilstone((old)=> !old)}>add milestone</button>
+            <button className='showAddMilestoneForm' type="button" onClick={()=> addBtnFunction()}>add milestone</button>
     )
 
     return (
@@ -99,11 +130,11 @@ const AddMilestone = ({campaignId}) => {
             <label>Target Amount ($)</label>
             <input
             type="text"
-            name="targetAmount"
-            value={milstoneData.targetAmount}
+            name="target_amount"
+            value={milstoneData.target_amount}
             onChange={handleChange}
             />
-            {errors.targetAmount && <p className='error'>{errors.targetAmount}</p>}
+            {errors.target_amount && <p className='error'>{errors.target_amount}</p>}
             <label>Achieved?</label>
             <div className="radio-group">
             <label>

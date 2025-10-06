@@ -47,7 +47,6 @@ header .container h1 {
 header .container > a:last-of-type {
     font-size: 14px;
     font-weight: 400;
-    text-transform: capitalize;
     padding: 5px 10px;
     border-radius: 5px;
     border: 2px solid #000;

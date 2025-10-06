@@ -1,9 +1,10 @@
     .login-container {
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     min-height: 100vh;
     background: #f4f6f9;
+    padding-top: 50px;
     }
 
     .login-form {
@@ -11,10 +12,17 @@
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    width: 320px;
+    max-width: 70%;
+    margin: 50px auto;
     display: flex;
     flex-direction: column;
     }
+
+    @media (width <= 667px) {
+    .login-form {
+        max-width: 100%;
+    }
+}
 
     .login-form h2 {
     text-align: center;

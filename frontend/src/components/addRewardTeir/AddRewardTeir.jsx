@@ -1,15 +1,25 @@
-    import React, { useState } from 'react'
+    import React, { useContext, useState } from 'react'
     import './addReward.css'
 import Joi from 'joi';
+import { AppContext } from '../../context/AppContext';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useParams } from 'react-router';
 
-    const AddRewardTeir = ({ campaignId }) => {
+    const AddRewardTeir = () => {
+
+    let {id}=useParams();
     const [rewardteirData, setRewardteirData] = useState({
+        campaign_id:id,
         title: '',
         description: '',
-        pledgeAmount: '',
-        quantityClaimed: '',
-        quantityAvailable: '',
+        pledge_amount: '',
+        quantity_claimed: '',
+        quantity_available: '',
     })
+
+    let {userLogged}=useContext(AppContext);
 
     let [showAddMReward,setShowReward]= useState(true);
         let [errors,setErrors]=useState({});
@@ -27,14 +37,31 @@ import Joi from 'joi';
         }
         else {
             // add request
-            console.log('added',{
-                campaignId,
-                ...rewardteirData
-            });
-            clearData();
+            console.log(rewardteirData)
+            rewardteir_mutation.mutate();
             setShowReward((old)=> !old);
         }
     }
+
+    // request to add rewairdteir
+
+    let rewardteir_mutation=useMutation({
+        mutationKey:['postRewardteir'],
+        mutationFn: ()=> axios.post(`http://localhost:3000/api/v1/reward_tiers`,
+            {...rewardteirData,campaign_id:id},{headers:{'Content-Type' : 'application/json'}}
+        ),
+
+        onSuccess: ()=> {
+            toast.success('Campaign Rewardteir is added successfully');
+            clearData();
+        },
+
+        onError: (error)=> {
+            console.log(error)
+            toast.error('please try again');
+        }
+    })
+
 
     let formValidation = ()=> {
             let schema = Joi.object({
@@ -46,25 +73,30 @@ import Joi from 'joi';
                     'string.empty' :'Description is required',
                     'string.pattern.base': 'Description must contain only letters and spaces',
                 }),
-                quantityClaimed : Joi.number().required().min(0).messages({
-                    'string.empty' : 'Target Amount is required',
-                    'number.base': 'Target Amount must be a number.',
-                    'number.min' : 'Target Amount must be a positive number.'
+                quantity_claimed : Joi.number().required().min(0).messages({
+                    'string.empty' : 'Quantity Claimed is required',
+                    'number.base': 'Quantity Claimed must be a number.',
+                    'number.min' : 'Quantity Claimed must be a positive number.'
                 }),
-                pledgeAmount : Joi.number().required().min(0).messages({
-                    'string.empty' : 'Target Amount is required',
-                    'number.base': 'Target Amount must be a number.',
-                    'number.min' : 'Target Amount must be a positive number.'
+                pledge_amount : Joi.number().required().min(0).messages({
+                    'string.empty' : 'Pledge Amount is required',
+                    'number.base': 'Pledge Amount must be a number.',
+                    'number.min' : 'Pledge Amount must be a positive number.'
                 }),
-                quantityAvailable : Joi.number().required().min(0).messages({
-                    'string.empty' : 'Target Amount is required',
-                    'number.base': 'Target Amount must be a number.',
-                    'number.min' : 'Target Amount must be a positive number.'
+                quantity_available : Joi.number().required().min(0).messages({
+                    'string.empty' : 'Quantity Available is required',
+                    'number.base': 'Quantity Available must be a number.',
+                    'number.min' : 'Quantity Available must be a positive number.'
                 }),
                 
             })
     
-            return schema.validate(rewardteirData,{abortEarly : false});
+            return schema.validate({title: rewardteirData.title,
+                description : rewardteirData.description,
+                quantity_claimed : rewardteirData.quantity_claimed,
+                pledge_amount : rewardteirData.pledge_amount,
+                quantity_available : rewardteirData.quantity_available,
+            },{abortEarly : false});
         }
     
             //get errors of validation
@@ -76,26 +108,38 @@ import Joi from 'joi';
                     errors[field] = err.message;
                 }
             });
-            console.log(errors)
+            // console.log(errors)
             return errors;
         }
         // clear data after submit
         // 
         let clearData = ()=> {
             setRewardteirData({
+                campaign_id: id,
                 title: '',
                 description: '',
-                pledgeAmount: '',
-                quantityClaimed: '',
-                quantityAvailable: '',
+                pledge_amount: '',
+                quantity_claimed: '',
+                quantity_available: '',
             });
             setErrors({});
+        }
+
+        
+
+        let addBtnFunction=()=> {
+            if(userLogged) {
+                setShowReward((old)=> !old);
+            }
+            else {
+                toast.error('Please sign or register');
+            }
         }
 
 
     if(showAddMReward) 
         return (
-            <button className='showAddRewardForm' onClick={()=> setShowReward((old)=> !old)}>add rewardteir</button>
+            <button className='showAddRewardForm' onClick={()=> addBtnFunction()}>add rewardteir</button>
     )
 
     return (
@@ -122,27 +166,27 @@ import Joi from 'joi';
             <label>Pledge Amount ($)</label>
             <input
             type="text"
-            name="pledgeAmount"
-            value={rewardteirData.pledgeAmount}
+            name="pledge_amount"
+            value={rewardteirData.pledge_amount}
             onChange={handleChange}
             />
-            {errors.quantityClaimed && <p className='error'>{errors.quantityClaimed}</p>}
+            {errors.pledge_amount && <p className='error'>{errors.pledge_amount}</p>}
             <label>Quantity Claimed</label>
             <input
             type="text"
-            name="quantityClaimed"
-            value={rewardteirData.quantityClaimed}
+            name="quantity_claimed"
+            value={rewardteirData.quantity_claimed}
             onChange={handleChange}
             />
-            {errors.quantityClaimed && <p className='error'>{errors.quantityClaimed}</p>}
+            {errors.quantity_claimed && <p className='error'>{errors.quantity_claimed}</p>}
             <label>Quantity Available</label>
             <input
             type="text"
-            name="quantityAvailable"
-            value={rewardteirData.quantityAvailable}
+            name="quantity_available"
+            value={rewardteirData.quantity_available}
             onChange={handleChange}
             />
-            {errors.quantityAvailable && <p className='error'>{errors.quantityAvailable}</p>}
+            {errors.quantity_available && <p className='error'>{errors.quantity_available}</p>}
             <button type="submit">Submit</button>
         </form>
         </div>
