@@ -47,9 +47,8 @@ import { useParams } from 'react-router';
 
     let rewardteir_mutation=useMutation({
         mutationKey:['postRewardteir'],
-        mutationFn: ()=> axios.post(`http://localhost:3000/api/v1/reward_tiers`,
-            {...rewardteirData,campaign_id:id},{headers:{'Content-Type' : 'application/json'}}
-        ),
+        mutationFn: ()=> axios.post(`/reward_tiers`,
+            {...rewardteirData,campaign_id:id}),
 
         onSuccess: ()=> {
             toast.success('Campaign Rewardteir is added successfully');

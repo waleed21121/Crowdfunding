@@ -1,7 +1,9 @@
 
-// import axios from 'axios'
+import axios from 'axios'
 
-// let base_URL=import.meta.env.VITE_BASE_UR;
+let base_URL=import.meta.env.VITE_BASE_URL;
 
 
-// axios.defaults.baseURL=`${base_URL}/v1`;
+axios.defaults.baseURL=`${base_URL}/v1`;
+
+axios.defaults.headers.common['Content-Type']="application/json"

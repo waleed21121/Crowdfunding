@@ -13,10 +13,7 @@ const Campaigns = () => {
 
     let {data,isError, isLoading} =useQuery({
         queryKey : ['getCampaigns'],
-        queryFn : ()=> axios.get('http://localhost:3000/api/v1/campaigns',{headers: {
-            "Content-Type" : 'application/json'
-        }},
-    ),
+        queryFn : ()=> axios.get('/campaigns'),
     })
 
     

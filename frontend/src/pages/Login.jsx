@@ -19,14 +19,13 @@ const Login = () => {
 
     let userMutation=useMutation({
         mutationKey : ['login_register'],
-        mutationFn: (userData)=> axios.post(`http://localhost:3000/api/v1/users/${isSignUp? 'register' : 'login'}`
-            ,userData,{headers: {"Content-Type" : 'application/json'}}),
+        mutationFn: (userData)=> axios.post(`/users/${isSignUp? 'register' : 'login'}`,userData),
         
         onSuccess: (res)=> {
             setUserLogged(true);
             setUserData(res.data.data);
             toast.success(res.data.message);
-            localStorage.setItem("saveLogin",true);
+            localStorage.setItem("saveLogin",JSON.stringify(true));
             localStorage.setItem("currentUser",JSON.stringify(res.data.data));
             clearData();
         },

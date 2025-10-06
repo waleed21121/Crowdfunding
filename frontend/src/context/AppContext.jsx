@@ -6,11 +6,11 @@ export let AppContext=createContext();
 const AppContextProvider = ({children}) => {
 
     let [userLogged,setUserLogged]=useState(()=> {
-        let login=localStorage.getItem("saveLogin");
+        let login=JSON.parse(localStorage.getItem("saveLogin"));
         return login ? true : false;
     });
     let [userData,setUserData]=useState(()=> {
-        let user=localStorage.getItem("saveLogin");
+        let user=JSON.parse(localStorage.getItem("currentUser"));
         return user ? user : {};
     });
 

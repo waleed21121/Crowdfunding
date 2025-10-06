@@ -16,7 +16,7 @@ const ShowMilestones = () => {
     let {data,isLoading,isError,error}=useQuery({
         queryKey: ['getCampaignMilestone'],
         queryFn : async ()=> {
-            let res= await axios.get(`http://localhost:3000/api/v1/campaigns/${id}/milestones`);
+            let res= await axios.get(`/campaigns/${id}/milestones`);
             return res.data;
         }
     })

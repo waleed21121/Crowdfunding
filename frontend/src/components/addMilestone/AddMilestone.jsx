@@ -42,9 +42,7 @@ const AddMilestone = () => {
     // add request to get add campaign milestone
     let milestone_mutation=useMutation({
             mutationKey:['postMilestone'],
-            mutationFn: ()=> axios.post(`http://localhost:3000/api/v1/milestones`,
-                milstoneData,{headers:{'Content-Type' : 'application/json'}}
-            ),
+            mutationFn: ()=> axios.post(`/milestones`,milstoneData),
     
             onSuccess: ()=> {
                 toast.success('Campaign Milestone is added successfully');

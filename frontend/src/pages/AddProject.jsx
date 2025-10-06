@@ -24,22 +24,20 @@ const AddProject = () => {
 
     let projectMutation=useMutation({
         mutationKey : ['add_project'],
-        mutationFn: (project_data)=> axios.post('http://localhost:3000/api/v1/campaigns',
-            {
+        mutationFn: (project_data)=> axios.post('/campaigns',{
                 ...project_data,
                 user_id : userData.id,
                 current_funds: userData.current_funds,
                 status : 'active'
             }
-            ,{headers: {"Content-Type": 'application/json'}}
         ),
 
         onSuccess: ()=> {
             toast.success("The new campaign is added successfully");
-            console.log('added');
+            clearData();
         },
 
-        onError : ()=> {
+        onError : (error)=> {
             toast.error("Please try again");
         }
     })
@@ -58,7 +56,7 @@ const AddProject = () => {
             // add request
             projectMutation.mutate(newCampaignData)
             // addRequest();
-            clearData();
+    
         }
     }
 

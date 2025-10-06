@@ -19,7 +19,7 @@ const Campaign = () => {
     let {data,isLoading,isError,error } = useQuery({
         queryKey:['getOneCampaignData'],
         queryFn : async ()=> {
-            let res= await axios.get(`http://localhost:3000/api/v1/campaigns/${id}`,{headers: {'Content-Type': 'application/json'}})
+            let res= await axios.get(`/campaigns/${id}`)
             return res.data;
         }
         

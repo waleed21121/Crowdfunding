@@ -16,7 +16,7 @@ const ShowRewardTeir = () => {
     let {data,isLoading,isError,error}=useQuery({
         queryKey: ['getCampaignRewardteirs'],
         queryFn : async ()=> {
-            let res= await axios.get(`http://localhost:3000/api/v1/campaigns/${id}/reward_tiers`);
+            let res= await axios.get(`/campaigns/${id}/reward_tiers`);
             return res.data;
         }
     })
