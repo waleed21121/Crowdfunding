@@ -25,12 +25,14 @@ const Login = () => {
             setUserLogged(true);
             setUserData(res.data.data);
             toast.success(res.data.message);
+            if(isSignUp) toast.info("We send to you a verfication email, please verify you email")
             localStorage.setItem("saveLogin",JSON.stringify(true));
             localStorage.setItem("currentUser",JSON.stringify(res.data.data));
             clearData();
         },
 
         onError: (error) => {
+            console.log(error)
             toast.error(error.response.data.error);
         }
     })
