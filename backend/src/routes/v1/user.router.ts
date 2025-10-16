@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { userController} from "../../controllers";
-import { wrapErrorMiddleware } from "../../middlewares";
+import { verifyJwtMiddleware, wrapErrorMiddleware } from "../../middlewares";
 import { idValidator } from "../../validators/id.validator";
 import { loginUserValidator, createUserValidator, verifyUserValidator, DepositValidator } from "../../validators";
 
 const userRouter = Router();
 
 userRouter.route('/')
-                .get(wrapErrorMiddleware(userController.findAll))
+                .get(wrapErrorMiddleware(verifyJwtMiddleware), wrapErrorMiddleware(userController.findAll))
 
 userRouter.route('/login')
                 .post(loginUserValidator, wrapErrorMiddleware(userController.login));

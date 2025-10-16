@@ -5,8 +5,12 @@ import { DBConnect } from './models';
 import { errorHandler, requestLogger } from './middlewares';
 import { scheduler } from './utils';
 import router from './routes';
+import cookieParser from 'cookie-parser';
 
 const app = express();
+
+// Cookie parser middleware
+app.use(cookieParser())
 
 // Cors middleware
 app.use(cors())
