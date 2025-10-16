@@ -16,7 +16,6 @@ const Campaigns = () => {
         queryFn : ()=> axios.get('/campaigns'),
     })
 
-    
 
 //     let getData= async ()=> {
 //         fetch('',{headers: {"Content-Type" : 'application/json'}}).then((res)=> {

@@ -19,11 +19,10 @@ const Login = () => {
 
     let userMutation=useMutation({
         mutationKey : ['login_register'],
-        mutationFn: (userData)=> axios.post(`/users/${isSignUp? 'register' : 'login'}`,userData,{
-            withCredentials: true,
-        }),
+        mutationFn: (userData)=> axios.post(`/users/${isSignUp? 'register' : 'login'}`,userData),
         
         onSuccess: (res)=> {
+            console.log(res.data)
             setUserLogged(true);
             setUserData(res.data.data);
             toast.success(res.data.message);
@@ -35,7 +34,27 @@ const Login = () => {
 
         onError: (error) => {
             console.log(error)
+            console.log('no login')
             toast.error(error.response.data.error);
+        }
+    })
+
+
+    let {mutate , error} =useMutation({
+        mutationKey :['get_users'],
+        mutationFn: ()=> axios.get('/users',{
+            withCredentials: true,
+            headers: {
+                "Content-Type": 'application/json',
+            }
+        }),
+
+        onSuccess: (res)=> {
+            console.log(res);
+        },
+
+        onError: (error)=> {
+            console.log(error);
         }
     })
 
@@ -54,6 +73,7 @@ const Login = () => {
         else {
             // add request
             userMutation.mutate(formData);
+            mutate();
             // addNewUser(formData);
         }
     }
