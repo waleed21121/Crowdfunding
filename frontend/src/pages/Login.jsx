@@ -19,7 +19,9 @@ const Login = () => {
 
     let userMutation=useMutation({
         mutationKey : ['login_register'],
-        mutationFn: (userData)=> axios.post(`/users/${isSignUp? 'register' : 'login'}`,userData),
+        mutationFn: (userData)=> axios.post(`/users/${isSignUp? 'register' : 'login'}`,userData,{
+            withCredentials: true,
+        }),
         
         onSuccess: (res)=> {
             setUserLogged(true);
