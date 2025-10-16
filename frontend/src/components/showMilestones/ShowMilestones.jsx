@@ -22,7 +22,7 @@ const ShowMilestones = () => {
     })
 
 
-
+    console.log(error);
     if(error && error.status===404) return <Empty message={'there is no milestones for this campaign'}/>
     if(isLoading) return <Loading/>
     if(isError) return <Error/>
