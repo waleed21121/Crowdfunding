@@ -15,24 +15,24 @@ declare global {
 export default async function (req: Request, res: Response, next: NextFunction) {
     const accessToken = req.headers['accessToken'] || req.cookies['accessToken'];
     const refreshToken = req.headers['refreshToken'] || req.cookies['refreshToken'];
+    console.log(accessToken);
+    console.log(refreshToken);
+    
+    
     try {
-        const payload = await JWT.verifyToken(accessToken);
-        if(payload instanceof User) {
-            res.header('accessToken', accessToken);
-            req.user = payload;
-            next();
-        }
-        throw new AppError(StatusCodes.UNAUTHORIZED, "Error validating the token.", "Invalid payload.")
+        const payload: any = await JWT.verifyToken(accessToken);
+        res.header('accessToken', accessToken);
+        req.user = payload;
+        next();
     } catch (accessTokenError) {
         try {
-            const payload = await JWT.verifyToken(refreshToken);
-            if(payload instanceof User) {
-                const newAccessToken = await JWT.accessTokenGenerator(payload);
-                res.header('accessToken', newAccessToken);
-                req.user = payload;
-                next();
-            }
-            throw new AppError(StatusCodes.UNAUTHORIZED, "Error validating the token.", "Invalid payload.")
+            const payload: any = await JWT.verifyToken(refreshToken);
+            const newAccessToken = await JWT.accessTokenGenerator(payload);
+            res.header('accessToken', newAccessToken);
+            res.cookie('accessToken', newAccessToken, {httpOnly: true, secure: true});
+            req.user = payload;
+            next();
+            
         } catch (refreshTokenError) {
             next(refreshTokenError);
         }

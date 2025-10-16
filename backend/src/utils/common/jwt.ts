@@ -21,10 +21,9 @@ async function refreshTokenGenerator (payload: Partial<User>) {
 }
 
 async function verifyToken (bearerToken: string) {
-    try {
-
-        const token = bearerToken.split(' ')[1];
-        const payload = await verify(token, envVariables.PUBLIC_KEY, {
+    try {        
+        const token = bearerToken;
+        const payload = await verify(token, envVariables.PRIVATE_KEY, {
             algorithms: ["RS256"]
         });
 

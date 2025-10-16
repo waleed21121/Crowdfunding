@@ -15,7 +15,7 @@ export default function <P, B, Q, R> (fn: (Preq: Request <P, {}, B, Q>, Pres: Re
                 next(err);
             } else {
                 // Will be handled in the production ...
-                const err = new AppError(StatusCodes.INTERNAL_SERVER_ERROR, "Something Worong Happened", error);
+                const err = new AppError(StatusCodes.INTERNAL_SERVER_ERROR, "Something Wrong Happened", error);
                 next(err);
             }
         }
