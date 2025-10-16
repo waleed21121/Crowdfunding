@@ -13,7 +13,9 @@ const app = express();
 app.use(cookieParser())
 
 // Cors middleware
-app.use(cors())
+app.use(cors({
+    origin: 'http:localhost:5173'
+}))
 
 // Json middleware
 app.use(express.json());
