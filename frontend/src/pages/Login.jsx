@@ -15,7 +15,7 @@ const Login = () => {
         name: '',
     })
     const [errors,setErrors] =useState({});
-    let {setUserData,setUserLogged}=useContext(AppContext);
+    let {setUserData,setUserLogged,userData}=useContext(AppContext);
 
     let userMutation=useMutation({
         mutationKey : ['login_register'],
@@ -52,7 +52,7 @@ const Login = () => {
         onSuccess: (res)=> {
             console.log(res);
         },
-
+        
         onError: (error)=> {
             console.log(error);
         }
@@ -73,7 +73,9 @@ const Login = () => {
         else {
             // add request
             userMutation.mutate(formData);
-            mutate();
+            setTimeout(()=> {
+                mutate();
+            },1000)
             // addNewUser(formData);
         }
     }

@@ -17,8 +17,8 @@ const create: TCreateUser = async (req, res: Response<IUserResponse>, next: Next
 
 const login: TLoginUser = async (req, res: Response<IUserAuthResponse>, next:NextFunction) => {
     const tokens = await userService.login(req.body);
-    res.cookie('accessToken', tokens.accessToken, {httpOnly: true, secure: true});
-    res.cookie('refreshToken', tokens.refreshToken, {httpOnly: true, secure: true});
+    res.cookie('accessToken', tokens.accessToken, {httpOnly: true, secure: true });
+    res.cookie('refreshToken', tokens.refreshToken, {httpOnly: true, secure: true });
     res.status(StatusCodes.OK).send({
         success: true,
         message: 'Successfully logined a user',
